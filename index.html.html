@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tailor Desk – Digital Order and Customer Management for Local Tailors</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=DM+Sans:wght@400;500;700&display=swap">
+<style>
+:root{--ink:#1d2147;--mut:#666b8f;--line:#e8e6f7;--red:#ff5d5d;--yel:#ffc53d;--grn:#2fc58b;--blu:#3d8bff;--pur:#7a5cff;
+color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{margin:0;background:#fff;color:var(--ink);font:400 16px/1.6 "DM Sans",system-ui,sans-serif}
+h1,h2,h3{font-family:"Fredoka","Trebuchet MS",sans-serif;line-height:1.15;margin:0}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:#fff;z-index:30}
+.wrap{max-width:1100px;margin:0 auto;padding:0 20px}
+nav{position:sticky;top:env(safe-area-inset-top,0px);background:#fff;border-bottom:2px solid var(--line);z-index:20}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+.logo{font:700 22px "Fredoka",sans-serif;display:flex;gap:8px;align-items:center;color:var(--ink);text-decoration:none}
+.logo span{display:inline-block;animation:bounce 1.6s infinite}
+nav a.l{color:var(--mut);text-decoration:none;margin-left:20px;font-weight:500}
+nav a.l:hover{color:var(--pur)}
+@keyframes bounce{0%,100%{transform:translateY(0)}40%{transform:translateY(-14px)}60%{transform:translateY(-4px)}}
+@keyframes pop{0%{transform:scale(.4);opacity:0}60%{transform:scale(1.08);opacity:1}100%{transform:scale(1)}}
+@keyframes drop{0%{transform:translateY(-60px);opacity:0}60%{transform:translateY(10px);opacity:1}80%{transform:translateY(-5px)}100%{transform:translateY(0)}}
+.btn{display:inline-block;border:0;border-radius:999px;padding:13px 26px;font:600 16px "Fredoka",sans-serif;cursor:pointer;text-decoration:none;color:#fff;background:var(--pur);box-shadow:0 5px 0 #5a3fd6;transition:transform .2s cubic-bezier(.3,1.8,.5,1)}
+.btn:hover{transform:translateY(-6px)}
+.btn:active{transform:translateY(3px);box-shadow:0 2px 0 #5a3fd6}
+.btn.alt{background:#fff;color:var(--ink);border:2px solid var(--ink);box-shadow:0 5px 0 var(--ink)}
+.btn.sm{padding:8px 16px;font-size:14px}
+:focus-visible{outline:3px solid var(--blu);outline-offset:3px}
+.hero{padding:56px 0 40px;text-align:center;position:relative;overflow:hidden}
+.hero h1{font-size:clamp(36px,7vw,68px);font-weight:700;max-width:14ch;margin:0 auto 16px}
+.hero h1 b{display:inline-block;animation:bounce 2s infinite}
+.hero h1 b:nth-child(2){animation-delay:.15s}.hero h1 b:nth-child(3){animation-delay:.3s}
+.hero p{max-width:56ch;margin:0 auto 28px;color:var(--mut);font-size:18px}
+.hero .cta{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-bottom:40px}
+.toys{display:flex;justify-content:center;gap:clamp(12px,4vw,36px);flex-wrap:wrap}
+.toy{width:84px;height:84px;border-radius:50%;display:grid;place-items:center;font-size:40px;animation:bounce 1.8s infinite}
+.toy:nth-child(1){background:#ffe3e3;animation-delay:0s}.toy:nth-child(2){background:#fff1cc;animation-delay:.2s}
+.toy:nth-child(3){background:#d8f6ea;animation-delay:.4s}.toy:nth-child(4){background:#dcebff;animation-delay:.6s}.toy:nth-child(5){background:#e8e1ff;animation-delay:.8s}
+section{padding:56px 0}
+h2{font-size:clamp(28px,4.5vw,40px);text-align:center;margin-bottom:8px}
+.sub{text-align:center;color:var(--mut);max-width:56ch;margin:0 auto 32px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px}
+.card{border:2px solid var(--line);border-radius:22px;padding:22px;background:#fff;transition:transform .25s cubic-bezier(.3,1.9,.5,1),border-color .2s}
+.card:hover{transform:translateY(-12px) rotate(-1deg);border-color:var(--pur)}
+.card i{font-style:normal;font-size:34px;display:inline-block}
+.card:hover i{animation:bounce .7s}
+.card h3{font-size:20px;margin:8px 0 4px}
+.card p{margin:0;color:var(--mut);font-size:15px}
+.rv{opacity:0}.rv.in{animation:drop .8s forwards}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:14px;margin-bottom:24px}
+.stat{border-radius:20px;padding:14px;text-align:center;font-weight:700;color:var(--ink)}
+.stat b{display:block;font:700 34px "Fredoka",sans-serif}
+.stat.bump b{animation:pop .5s}
+.app{display:grid;grid-template-columns:minmax(0,340px) minmax(0,1fr);gap:24px;align-items:start}
+@media(max-width:820px){.app{grid-template-columns:1fr}}
+form.panel,.list{border:2px solid var(--line);border-radius:24px;padding:20px}
+label{display:block;font-weight:600;font-size:14px;margin:10px 0 4px}
+input,select,textarea{width:100%;border:2px solid var(--line);border-radius:14px;padding:10px 12px;font:inherit;color:var(--ink);background:#fff}
+input:focus,select:focus,textarea:focus{border-color:var(--pur);outline:0}
+.r3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.tabs{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;align-items:center}
+.tab{border:2px solid var(--line);background:#fff;border-radius:999px;padding:8px 18px;font:600 15px "Fredoka",sans-serif;cursor:pointer;transition:transform .2s cubic-bezier(.3,1.9,.5,1)}
+.tab:hover{transform:translateY(-4px)}
+.tab.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.tools{display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap}.tools input{flex:2 1 160px}.tools select{flex:1 1 120px}
+.item{border:2px solid var(--line);border-radius:18px;padding:14px;margin-bottom:12px;animation:pop .45s;display:grid;gap:6px}
+.item:hover{border-color:var(--blu)}
+.top{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;align-items:center}
+.top strong{font:600 18px "Fredoka",sans-serif}
+.meta{color:var(--mut);font-size:14px}
+.chip{border-radius:999px;padding:3px 12px;font-size:13px;font-weight:700}
+.Pending{background:#ffe3e3;color:#c03030}.InProgress{background:#fff1cc;color:#8a6200}.Ready{background:#dcebff;color:#1d5fc4}.Delivered{background:#d8f6ea;color:#12805a}
+.late{color:#c03030;font-weight:700}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.row select{width:auto}
+.x{background:none;border:2px solid var(--line);border-radius:12px;padding:6px 10px;cursor:pointer}.x:hover{border-color:var(--red)}
+.empty{text-align:center;color:var(--mut);padding:30px}
+.team{display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
+.team span{border:2px solid var(--line);border-radius:999px;padding:8px 18px;font-weight:600;transition:transform .2s cubic-bezier(.3,1.9,.5,1)}
+.team span:hover{transform:translateY(-8px)}
+footer{text-align:center;color:var(--mut);padding:30px 20px 40px;border-top:2px solid var(--line);font-size:14px}
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:#fff;padding:12px 22px;border-radius:999px;font-weight:600;z-index:40;animation:pop .4s}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.rv{opacity:1}}
+:root{--ink:#0f1b3d;--pur:#1f4fd8;--line:#e3e8f2;--mut:#5b6785}
+nav{border-bottom:0;box-shadow:0 1px 14px rgba(15,27,61,.07)}
+#lang{width:auto;margin-left:18px;padding:6px 10px;border-radius:10px;font-weight:600;border:1.5px solid var(--line)}
+.btn{border-radius:12px;font-family:"DM Sans",system-ui,sans-serif;font-weight:700;box-shadow:0 6px 16px rgba(31,79,216,.28)}
+.btn:active{box-shadow:0 2px 6px rgba(31,79,216,.28)}
+.btn.alt{border:1.5px solid var(--line);box-shadow:0 4px 12px rgba(15,27,61,.08)}
+.hero h1{font-weight:700;letter-spacing:-.5px}
+.card,form.panel,.list{border:1px solid var(--line);border-radius:16px;box-shadow:0 6px 20px rgba(15,27,61,.05)}
+.card:hover{box-shadow:0 16px 32px rgba(31,79,216,.15)}
+.item{border:1px solid var(--line);border-radius:14px}
+.stat{background:#fff!important;border:1px solid var(--line);border-top:4px solid var(--pur);border-radius:14px;color:var(--mut);font-weight:500}
+.stat b{color:var(--ink)}
+.stat:nth-child(2){border-top-color:var(--red)}.stat:nth-child(3){border-top-color:var(--yel)}.stat:nth-child(4){border-top-color:var(--blu)}.stat:nth-child(5){border-top-color:var(--grn)}.stat:nth-child(6){border-top-color:#c03030}
+.tab{border-radius:10px;border:1px solid var(--line)}.tab.on{background:var(--pur);border-color:var(--pur)}
+input,select,textarea{border:1.5px solid var(--line);border-radius:10px}
+.chip{border-radius:8px}
+.team span{border-radius:12px;border:1px solid var(--line);box-shadow:0 4px 12px rgba(15,27,61,.05)}
+footer{background:var(--ink);color:#c9d3ee;border-top:0}
+@media(max-width:640px){nav a.l{display:none}#lang{margin-left:0}}
+</style>
+</head>
+<body>
+<nav><div class="wrap"><a class="logo" href="#top"><span>🧵</span>Tailor Desk</a>
+<div><a class="l" href="#desk">Order desk</a><select id="lang" aria-label="Language"><option value="en">English</option><option value="hi">हिन्दी</option><option value="mr">मराठी</option><option value="gu">ગુજરાતી</option></select></div></div></nav>
+
+<header class="hero" id="top"><div class="wrap">
+<h1><b>Stitch</b> <b>smarter,</b> <b>deliver</b> <b>on</b> <b>time.</b></h1>
+<div class="cta"><a class="btn" href="#desk">Open the order desk</a></div>
+<div class="toys" aria-hidden="true"><div class="toy">✂️</div><div class="toy">🧵</div><div class="toy">📏</div><div class="toy">👗</div><div class="toy">🪡</div></div>
+</div></header>
+
+
+<section id="desk"><div class="wrap">
+<h2>Try the order desk</h2>
+<p class="sub">Add an order, change its status, and watch the numbers jump. Your entries stay saved in this browser.</p>
+<div class="stats" id="stats"></div>
+<div class="app">
+<form class="panel" id="f">
+<h3>New order</h3>
+<label for="name">Customer name</label><input id="name" required maxlength="40" placeholder="e.g. Anita Jadhav">
+<label for="phone">Phone number</label><input id="phone" required inputmode="tel" pattern="[0-9+ ]{8,15}" placeholder="10-digit number">
+<label for="type">Garment</label>
+<select id="type"><option>Shirt</option><option>Trouser</option><option>Blouse</option><option>Kurta</option><option>Suit</option><option>Alteration</option></select>
+<label>Measurements (inches)</label>
+<div class="r3"><input id="chest" type="number" min="0" step="0.5" placeholder="Chest" aria-label="Chest"><input id="waist" type="number" min="0" step="0.5" placeholder="Waist" aria-label="Waist"><input id="hip" type="number" min="0" step="0.5" placeholder="Hip" aria-label="Hip"></div>
+<label for="date">Delivery date</label><input id="date" type="date" required>
+<label for="note">Stitching instructions</label><textarea id="note" rows="2" maxlength="120" placeholder="Fit, sleeves, buttons…"></textarea>
+<p style="margin:16px 0 0"><button class="btn" type="submit">Save order</button></p>
+</form>
+<div class="list">
+<div class="tabs"><button class="tab on" data-v="orders" type="button">Orders</button><button class="tab" data-v="cust" type="button">Customers</button></div>
+<div class="tools"><input id="q" placeholder="Search name or phone" aria-label="Search"><select id="flt" aria-label="Filter by status"><option value="">All statuses</option><option>Pending</option><option>In Progress</option><option>Ready for Delivery</option><option>Delivered</option></select></div>
+<div id="out"></div>
+</div></div></div></section>
+
+
+<script>
+var KEY="tailordesk-v1",raw=null,orders=[],view="orders";
+try{raw=localStorage.getItem(KEY)}catch(e){}
+function day(n){var x=new Date();x.setDate(x.getDate()+n);return x.toISOString().slice(0,10)}
+if(raw){try{orders=JSON.parse(raw)}catch(e){orders=[]}}
+else{orders=[
+{id:1,name:"Rahul Patil",phone:"9876500001",type:"Shirt",chest:38,waist:32,hip:38,date:day(2),note:"Slim fit, full sleeves",status:"In Progress"},
+{id:2,name:"Sneha Pawar",phone:"9876500002",type:"Blouse",chest:34,waist:28,hip:36,date:day(-1),note:"Back neck deep, piping",status:"Pending"},
+{id:3,name:"Amit Shinde",phone:"9876500003",type:"Trouser",chest:0,waist:34,hip:40,date:day(5),note:"Pleated, no cuffs",status:"Ready for Delivery"}]}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(orders))}catch(e){}}
+function $(i){return document.getElementById(i)}
+function esc(s){return String(s).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
+function cls(s){return s==="In Progress"?"InProgress":s==="Ready for Delivery"?"Ready":s}
+var today=day(0);
+function due(o){
+ if(o.status==="Delivered")return "Delivered";
+ var d=Math.round((new Date(o.date)-new Date(today))/864e5);
+ if(d<0)return '<span class="late">Late by '+(-d)+' day'+(d===-1?"":"s")+'</span>';
+ if(d===0)return '<span class="late">Due today</span>';
+ return "Due in "+d+" day"+(d===1?"":"s")}
+function stats(){
+ var c={t:orders.length,p:0,i:0,r:0,d:0,l:0};
+ orders.forEach(function(o){if(o.status==="Pending")c.p++;if(o.status==="In Progress")c.i++;if(o.status==="Ready for Delivery")c.r++;if(o.status==="Delivered")c.d++;if(o.status!=="Delivered"&&o.date<today)c.l++});
+ var s=[["All orders",c.t,"#e8e1ff"],["Pending",c.p,"#ffe3e3"],["In progress",c.i,"#fff1cc"],["Ready",c.r,"#dcebff"],["Delivered",c.d,"#d8f6ea"],["Late",c.l,"#ffd0d0"]];
+ $("stats").innerHTML=s.map(function(x){return '<div class="stat bump" style="background:'+x[2]+'"><b>'+x[1]+'</b>'+x[0]+'</div>'}).join("")}
+function render(){
+ stats();
+ var q=$("q").value.toLowerCase(),f=$("flt").value,h="";
+ var m=orders.filter(function(o){return(!q||o.name.toLowerCase().indexOf(q)>-1||o.phone.indexOf(q)>-1)&&(!f||o.status===f||view==="cust")});
+ if(view==="orders"){
+  m.sort(function(a,b){return a.date<b.date?-1:1});
+  h=m.map(function(o){return '<div class="item"><div class="top"><strong>'+esc(o.name)+' · '+esc(o.type)+'</strong><span class="chip '+cls(o.status)+'">'+o.status+'</span></div>'
+  +'<div class="meta">📞 '+esc(o.phone)+' · 📅 '+o.date+' · '+due(o)+'</div>'
+  +'<div class="meta">📏 Chest '+(o.chest||"–")+' · Waist '+(o.waist||"–")+' · Hip '+(o.hip||"–")+(o.note?' · “'+esc(o.note)+'”':"")+'</div>'
+  +'<div class="row"><select data-s="'+o.id+'" aria-label="Change status">'+["Pending","In Progress","Ready for Delivery","Delivered"].map(function(s){return '<option'+(s===o.status?" selected":"")+'>'+s+'</option>'}).join("")+'</select><button class="x" data-d="'+o.id+'" type="button" aria-label="Delete order">🗑️</button></div></div>'}).join("")}
+ else{
+  var seen={};
+  m.slice().reverse().forEach(function(o){var k=o.phone;if(!seen[k])seen[k]={o:o,n:0};seen[k].n++});
+  h=Object.keys(seen).map(function(k){var o=seen[k].o;return '<div class="item"><div class="top"><strong>'+esc(o.name)+'</strong><span class="chip Ready">'+seen[k].n+' order'+(seen[k].n>1?"s":"")+'</span></div><div class="meta">📞 '+esc(o.phone)+'</div><div class="meta">📏 Latest: Chest '+(o.chest||"–")+' · Waist '+(o.waist||"–")+' · Hip '+(o.hip||"–")+'</div></div>'}).join("")}
+ $("out").innerHTML=h||'<div class="empty">Nothing here yet. Fill in the form and save your first order.</div>'}
+function toast(t){var e=document.createElement("div");e.className="toast";e.textContent=t;document.body.appendChild(e);setTimeout(function(){e.remove()},2000)}
+$("date").value=day(3);$("date").min=today;
+$("f").addEventListener("submit",function(e){e.preventDefault();
+ orders.push({id:Date.now(),name:$("name").value.trim(),phone:$("phone").value.trim(),type:$("type").value,chest:+$("chest").value||0,waist:+$("waist").value||0,hip:+$("hip").value||0,date:$("date").value,note:$("note").value.trim(),status:"Pending"});
+ save();$("f").reset();$("date").value=day(3);render();toast("Order saved ✅")});
+$("out").addEventListener("change",function(e){var id=e.target.getAttribute("data-s");if(!id)return;
+ orders.forEach(function(o){if(o.id==id)o.status=e.target.value});save();render();toast("Status updated")});
+$("out").addEventListener("click",function(e){var b=e.target.closest("[data-d]");if(!b)return;
+ orders=orders.filter(function(o){return o.id!=b.getAttribute("data-d")});save();render();toast("Order deleted")});
+$("q").addEventListener("input",render);$("flt").addEventListener("change",render);
+document.querySelectorAll(".tab").forEach(function(t){t.addEventListener("click",function(){
+ document.querySelectorAll(".tab").forEach(function(x){x.classList.remove("on")});t.classList.add("on");view=t.getAttribute("data-v");render()})});
+render();
+var io=new IntersectionObserver(function(es){es.forEach(function(x){if(x.isIntersecting){x.target.classList.add("in");io.unobserve(x.target)}})},{threshold:.15});
+document.querySelectorAll(".rv").forEach(function(el,i){el.style.animationDelay=(i%3)*.12+"s";io.observe(el)});
+var K=["Pending","In Progress","Ready for Delivery","Delivered","All statuses","All orders","In progress","Ready","Late","Chest","Waist","Hip","Search name or phone","Order saved ✅","Status updated","Order deleted","Nothing here yet. Fill in the form and save your first order.","Due today","Due in","Late by","days","day","Latest:","orders","order"];
+var LG={
+hi:["लंबित","प्रगति में","डिलीवरी के लिए तैयार","डिलीवर हो गया","सभी स्थितियाँ","सभी ऑर्डर","प्रगति में","तैयार","देर से","छाती","कमर","हिप","नाम या फ़ोन खोजें","ऑर्डर सहेजा गया ✅","स्थिति बदली गई","ऑर्डर हटाया गया","अभी कुछ नहीं है। फ़ॉर्म भरकर अपना पहला ऑर्डर सहेजें।","आज डिलीवरी","शेष","देरी","दिन","दिन","ताज़ा:","ऑर्डर","ऑर्डर"],
+mr:["प्रलंबित","प्रगतीत","डिलिव्हरीसाठी तयार","डिलिव्हर झाले","सर्व स्थिती","सर्व ऑर्डर","प्रगतीत","तयार","उशीर","छाती","कंबर","हिप","नाव किंवा फोन शोधा","ऑर्डर जतन झाली ✅","स्थिती बदलली","ऑर्डर हटवली","अजून काही नाही. फॉर्म भरा आणि पहिली ऑर्डर जतन करा.","आज डिलिव्हरी","उरले","उशीर","दिवस","दिवस","अलीकडील:","ऑर्डर","ऑर्डर"],
+gu:["બાકી","પ્રગતિમાં","ડિલિવરી માટે તૈયાર","ડિલિવર થયું","બધી સ્થિતિ","બધા ઓર્ડર","પ્રગતિમાં","તૈયાર","મોડું","છાતી","કમર","હિપ","નામ કે ફોન શોધો","ઓર્ડર સચવાયો ✅","સ્થિતિ બદલાઈ","ઓર્ડર હટાવાયો","હજી કંઈ નથી. ફોર્મ ભરીને પહેલો ઓર્ડર સાચવો.","આજે ડિલિવરી","બાકી","મોડું","દિવસ","દિવસ","તાજેતરનું:","ઓર્ડર","ઓર્ડર"]};
+var H={hi:"सिलाई स्मार्ट, डिलीवरी समय पर।",mr:"शिलाई स्मार्ट, डिलिव्हरी वेळेवर.",gu:"સિલાઈ સ્માર્ટ, ડિલિવરી સમયસર."};
+var S={
+hi:["सुविधाएँ","ऑर्डर डेस्क","टीम","स्थानीय दर्जियों के लिए सरल डिजिटल ऑर्डर और ग्राहक प्रबंधन प्रणाली। ग्राहक की जानकारी, नाप, ऑर्डर और डिलीवरी की तारीखें नोटबुक की जगह एक ही जगह रखें।","ऑर्डर डेस्क खोलें","देखें यह क्या करता है","दर्जी की दुकान को जो कुछ चाहिए","चांदवड की पाँच दर्जी दुकानों के दौरे में जो देखा, उसी के आधार पर बनाया गया।","ग्राहक रिकॉर्ड","नाम और फ़ोन नंबर डिजिटल सहेजें, एक खोज में पाएँ।","नाप","हर ग्राहक की छाती, कमर और हिप की नाप सुरक्षित, दोबारा ऑर्डर के लिए तैयार।","ऑर्डर एंट्री","हर ऑर्डर के लिए कपड़े का प्रकार और सिलाई के निर्देश दर्ज।","डिलीवरी की तारीख","देखें कौन सा काम जल्द देना है और कौन सा देर से है।","ऑर्डर की स्थिति","लंबित, प्रगति में, डिलीवरी के लिए तैयार या डिलीवर हो गया।","फ़ोन और कंप्यूटर","कम खर्च और सरल, इसलिए हर छोटी दुकान इस्तेमाल कर सकती है।","ऑर्डर डेस्क आज़माएँ","ऑर्डर जोड़ें, स्थिति बदलें और आँकड़ों को उछलते देखें। आपकी एंट्री इसी ब्राउज़र में सुरक्षित रहती है।","नया ऑर्डर","ग्राहक का नाम","फ़ोन नंबर","कपड़ा","नाप (इंच)","डिलीवरी की तारीख","सिलाई के निर्देश","ऑर्डर सहेजें","ऑर्डर","ग्राहक","द्वितीय वर्ष कंप्यूटर इंजीनियरिंग द्वारा निर्मित","सामुदायिक सहभागिता परियोजना · स्थानीय दर्जियों के लिए डिजिटल ऑर्डर और ग्राहक प्रबंधन प्रणाली"],
+mr:["वैशिष्ट्ये","ऑर्डर डेस्क","टीम","स्थानिक शिंप्यांसाठी सोपी डिजिटल ऑर्डर आणि ग्राहक व्यवस्थापन प्रणाली. ग्राहकांची माहिती, मापे, ऑर्डर आणि डिलिव्हरीच्या तारखा वहीऐवजी एकाच ठिकाणी ठेवा.","ऑर्डर डेस्क उघडा","हे काय करते ते पहा","शिंपी दुकानाला लागणारे सर्व काही","चांदवडमधील पाच शिंपी दुकानांना भेट देऊन जे पाहिले त्यावर आधारित.","ग्राहक नोंदी","नाव आणि फोन नंबर डिजिटल जतन करा, एका शोधात मिळवा.","मापे","प्रत्येक ग्राहकाची छाती, कंबर आणि हिपचे माप जतन, पुन्हा ऑर्डरसाठी तयार.","ऑर्डर नोंद","प्रत्येक ऑर्डरसाठी कपड्याचा प्रकार आणि शिलाईच्या सूचना नोंदवल्या जातात.","डिलिव्हरीच्या तारखा","कोणते काम लवकर द्यायचे आणि कोणते उशिरा आहे ते पहा.","ऑर्डरची स्थिती","प्रलंबित, प्रगतीत, डिलिव्हरीसाठी तयार किंवा डिलिव्हर झाले.","फोन आणि संगणक","कमी खर्च आणि सोपे, त्यामुळे प्रत्येक लहान दुकान वापरू शकते.","ऑर्डर डेस्क वापरून पहा","ऑर्डर जोडा, स्थिती बदला आणि आकडे उड्या मारताना पहा. तुमच्या नोंदी याच ब्राउझरमध्ये जतन राहतात.","नवीन ऑर्डर","ग्राहकाचे नाव","फोन नंबर","कपडा","मापे (इंच)","डिलिव्हरीची तारीख","शिलाईच्या सूचना","ऑर्डर जतन करा","ऑर्डर","ग्राहक","द्वितीय वर्ष संगणक अभियांत्रिकी विद्यार्थ्यांनी बनवलेले","सामुदायिक सहभाग प्रकल्प · स्थानिक शिंप्यांसाठी डिजिटल ऑर्डर आणि ग्राहक व्यवस्थापन प्रणाली"],
+gu:["સુવિધાઓ","ઓર્ડર ડેસ્ક","ટીમ","સ્થાનિક દરજીઓ માટે સરળ ડિજિટલ ઓર્ડર અને ગ્રાહક વ્યવસ્થાપન સિસ્ટમ. ગ્રાહકની માહિતી, માપ, ઓર્ડર અને ડિલિવરીની તારીખો નોટબુકને બદલે એક જ જગ્યાએ રાખો.","ઓર્ડર ડેસ્ક ખોલો","તે શું કરે છે તે જુઓ","દરજીની દુકાનને જોઈતું બધું","ચાંદવડની પાંચ દરજી દુકાનોની મુલાકાતમાં જે જોયું તેના આધારે બનાવ્યું.","ગ્રાહક રેકોર્ડ","નામ અને ફોન નંબર ડિજિટલ સાચવો, એક શોધમાં મેળવો.","માપ","દરેક ગ્રાહકનું છાતી, કમર અને હિપનું માપ સુરક્ષિત, ફરી ઓર્ડર માટે તૈયાર.","ઓર્ડર એન્ટ્રી","દરેક ઓર્ડર માટે કપડાનો પ્રકાર અને સિલાઈની સૂચનાઓ નોંધાય છે.","ડિલિવરીની તારીખો","કયું કામ જલ્દી આપવાનું છે અને કયું મોડું છે તે જુઓ.","ઓર્ડરની સ્થિતિ","બાકી, પ્રગતિમાં, ડિલિવરી માટે તૈયાર અથવા ડિલિવર થયું.","ફોન અને કમ્પ્યુટર","ઓછો ખર્ચ અને સરળ, તેથી દરેક નાની દુકાન વાપરી શકે.","ઓર્ડર ડેસ્ક અજમાવો","ઓર્ડર ઉમેરો, સ્થિતિ બદલો અને આંકડા કૂદતા જુઓ. તમારી એન્ટ્રીઓ આ જ બ્રાઉઝરમાં સચવાય છે.","નવો ઓર્ડર","ગ્રાહકનું નામ","ફોન નંબર","કપડું","માપ (ઇંચ)","ડિલિવરીની તારીખ","સિલાઈની સૂચનાઓ","ઓર્ડર સાચવો","ઓર્ડર","ગ્રાહકો","દ્વિતીય વર્ષ કમ્પ્યુટર એન્જિનિયરિંગ દ્વારા બનાવેલ","સામુદાયિક ભાગીદારી પ્રોજેક્ટ · સ્થાનિક દરજીઓ માટે ડિજિટલ ઓર્ડર અને ગ્રાહક વ્યવસ્થાપન સિસ્ટમ"]};
+var D={},V=K.slice(17).concat(["Delivered","Chest","Waist","Hip"]),lang="en";
+for(var l in LG){D[l]={};K.forEach(function(k,i){D[l][k]=LG[l][i]})}
+var E=[].slice.call(document.querySelectorAll("nav a.l,.hero .btn,#desk h2,#desk .sub,form h3,form label,form button,.tab"));
+var M=[1,4,20,21,22,23,24,25,26,27,28,29,30,31];
+var h1=document.querySelector(".hero h1");
+E.concat([h1]).forEach(function(e){e.setAttribute("data-s","1");e._o=e===h1?e.innerHTML:e.textContent});
+function tx(r){
+ var w=document.createTreeWalker(r,NodeFilter.SHOW_TEXT),n,d=D[lang];
+ while(n=w.nextNode()){
+  var p=n.parentNode;
+  if(p.tagName==="SCRIPT"||p.closest("[data-s]"))continue;
+  if(n._o===undefined){n._o=n.nodeValue;if(p.tagName==="OPTION"&&!p.hasAttribute("value"))p.setAttribute("value",n._o.trim())}
+  var o=n._o,k=o.trim(),v=o;
+  if(d){if(d.hasOwnProperty(k))v=o.replace(k,d[k]);else V.forEach(function(x){v=v.replace(new RegExp("(?<![A-Za-z])"+x+"(?![A-Za-z])","g"),d[x])})}
+  if(n.nodeValue!==v)n.nodeValue=v}}
+function ap(){
+ var s=S[lang];
+ E.forEach(function(e,i){e.textContent=s?s[M[i]]:e._o});
+ h1.innerHTML=s?H[lang].split(" ").map(function(w){return "<b>"+w+"</b> "}).join(""):h1._o;
+ ["q","chest","waist","hip"].forEach(function(id){var e=$(id);if(e._p===undefined)e._p=e.placeholder;e.placeholder=(D[lang]&&D[lang][e._p])||e._p});
+ document.documentElement.lang=lang;
+ tx($("desk"))}
+new MutationObserver(function(ms){ms.forEach(function(m){m.addedNodes.forEach(function(a){if(a.nodeType===1)tx(a)})})}).observe(document.body,{childList:true,subtree:true});
+try{lang=localStorage.getItem("tailordesk-lang")||"en"}catch(e){}
+if(lang!=="en"&&!D[lang])lang="en";
+$("lang").value=lang;ap();
+$("lang").addEventListener("change",function(){lang=this.value;try{localStorage.setItem("tailordesk-lang",lang)}catch(e){}ap()});
+</script>
+</body>
+</html>
